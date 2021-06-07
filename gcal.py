@@ -15,9 +15,6 @@ SCOPES = ['https://www.googleapis.com/auth/calendar.readonly']
 
 
 def main(prefix=None):
-  """Shows basic usage of the Google Calendar API.
-  Prints the start and name of the next 10 events on the user's calendar.
-  """
   if prefix:
     prefix = f'{prefix}_'
   else:
@@ -45,7 +42,7 @@ def main(prefix=None):
 
   # Call the Calendar API
   now = datetime.datetime.utcnow().isoformat() + 'Z' # 'Z' indicates UTC time
-  until_dt = datetime.datetime.utcnow() + datetime.timedelta(hours=36)
+  until_dt = datetime.datetime.utcnow() + datetime.timedelta(hours=24)
   until = until_dt.isoformat() + 'Z'
   events_result = service.events().list(
     calendarId='primary', 

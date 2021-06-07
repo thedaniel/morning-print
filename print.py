@@ -38,20 +38,6 @@ def readwise():
   print(book)
   return quote
 
-
-# ids = [] # will mark these as seen in the db but this is just for dev
-
-# while True:
-#    r = requests.post('https://thermalist.herokuapp.com/pop')
-#    messages = r.json()
-#    print(messages)
-#    for m in messages:
-#       if m['id'] not in ids:
-#          p.text(f'{m["message"]}\n')
-
-#    ids += [m['id'] for m in messages]
-#    sleep(10)
-
 def _print():
   quote = readwise()
   events = cal()
