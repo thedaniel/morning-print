@@ -4,7 +4,11 @@ from time import sleep
 from dotenv import dotenv_values
 from random import choice
 from gcal import main as cal
+import pytz
+import iso8601
+
 config = dotenv_values(".env")
+tz = pytz.timezone('Europe/Amsterdam')
 
 p = Usb(0x28e9, 0x0289)
 # p = Dummy
@@ -51,16 +55,30 @@ def readwise():
 def _print():
   quote = readwise()
   events = cal()
+  work_events = cal(prefix='work')
   p.ln()
   p.textln(quote['text'])
   p.textln(f" - {quote['book']['title']}, by {quote['book']['author']}")
   p.ln()
   p.textln("Events")
   p.ln()
-  if not events:
-    p.textln('No upcoming events found.')
+  p.textln('Personal events')
+  p.textln('---------------')
   for event in events:
-    start = event['start'].get('dateTime', event['start'].get('date'))
+    try:
+      start = iso8601.parse_date(event['start'].get('dateTime')).astimezone(tz).strftime('%-H:%M')
+    except:
+      start = 'today'
+    p.textln(f"{start}  {event['summary']}")
+    p.ln()
+  p.ln()
+  p.textln('Work events')
+  p.textln('---------------')
+  for event in work_events:
+    try:
+      start = iso8601.parse_date(event['start'].get('dateTime')).astimezone(tz).strftime('%-H:%M')
+    except:
+      start = 'today'
     p.textln(f"{start}  {event['summary']}")
     p.ln()
   p.ln(count=3)

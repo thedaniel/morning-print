@@ -5,6 +5,10 @@ from googleapiclient.discovery import build
 from google_auth_oauthlib.flow import InstalledAppFlow
 from google.auth.transport.requests import Request
 from google.oauth2.credentials import Credentials
+import pytz
+import iso8601
+tz = pytz.timezone('Europe/Amsterdam')
+
 
 # If modifying these scopes, delete the file token.json.
 SCOPES = ['https://www.googleapis.com/auth/calendar.readonly']
@@ -56,10 +60,22 @@ def main(prefix=None):
 
 if __name__ == '__main__':
   events = main()
-  # TODO: work_events = main(prefix="work") and interpolate, maybe label
+  work_events = main(prefix="work")
   if not events:
-    print('No upcoming events found.')
+    print('No personal events.')
   for event in events:
     # TODO: convert to the right time zone
-    start = event['start'].get('dateTime', event['start'].get('date'))
+    try:
+      start = iso8601.parse_date(event['start'].get('dateTime')).astimezone(tz).strftime('%-H:%M')
+    except:
+      start = 'today'
+    print(start, event['summary'])
+
+  if not work_events:
+    print('No work events.')
+  for event in work_events:
+    try:
+      start = iso8601.parse_date(event['start'].get('dateTime')).astimezone(tz).strftime('%-H:%M')
+    except:
+      start = 'today'
     print(start, event['summary'])
