@@ -35,7 +35,6 @@ def readwise():
   )
   book = book.json()
   quote['book'] = book
-  print(book)
   return quote
 
 def _print():
