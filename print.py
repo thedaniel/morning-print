@@ -54,7 +54,7 @@ def _print():
       start = iso8601.parse_date(event['start'].get('dateTime')).astimezone(tz).strftime('%-H:%M')
     except:
       start = 'today'
-    p.textln(f"{start}  {event['summary']}")
+    p.textln(f"{start}  {event.get('summary', '')}")
     p.ln()
   p.ln()
   p.textln('Work events')
@@ -64,7 +64,7 @@ def _print():
       start = iso8601.parse_date(event['start'].get('dateTime')).astimezone(tz).strftime('%-H:%M')
     except:
       start = 'today'
-    p.textln(f"{start}  {event['summary']}")
+    p.textln(f"{start}  {event.get('summary', '')}")
     p.ln()
   p.ln(count=3)
 
