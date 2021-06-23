@@ -5,7 +5,8 @@ full of copy paste and hardcoding at the moment, it's just a quick personal util
 
 ## Gcal tokens
 
-The gcal stuff is adapted from this quickstart, you'll need to:
+The gcal stuff is adapted from a google cal api quickstart that i don't have the
+ink to handy, you'll need to:
 
 - create an app and some credentials for it and save them in the root dir as
   `credentials.json`
@@ -33,3 +34,11 @@ I have a [GOOJPRT
 PT-210](https://www.aliexpress.com/wholesale?catId=0&initiative_id=AS_20210607075245&origin=y&SearchText=goojprt+pt210)
 - also available on amazon and other sites. Most generic thermal printers should
   work
+
+## TODO
+
+- If the token expires the script crashes, it should probably just re-auth if it
+  can
+- maybe print error messages to the printer instead of showing them on stdout?
+- paginate readwise
+- filter out "readwise team" higlights
