@@ -6,6 +6,7 @@ from random import choice
 from gcal import main as cal
 import pytz
 import iso8601
+import sys
 
 config = dotenv_values(".env")
 tz = pytz.timezone('Europe/Amsterdam')
@@ -39,8 +40,19 @@ def readwise():
 
 def _print():
   quote = readwise()
-  events = cal()
-  work_events = cal(prefix='work')
+  try:
+    events = cal()
+  except Exception as e:
+    print('Error getting PERSONAL calendar events. You probably need to re-auth. rm token.json && python gcal.py')
+    print(e)
+    sys.exit(1)
+  try:
+    work_events = cal(prefix='work')
+  except Exception as e:
+    print('Error getting WORK calendar events. You probably need to re-auth.\nrm work_token.json here and python gcal.py on your work computer and copy token.json to work_token.json')
+    print(e)
+    sys.exit(1)
+
   p.ln()
   p.textln(quote['text'])
   p.textln(f" - {quote['book']['title']}, by {quote['book']['author']}")
